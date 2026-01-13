@@ -1,7 +1,9 @@
 {
   "**/*.{js,jsx,tsx,ts}": [
-    "npx @biomejs/biome check --write",
-    "tsc --noEmit",  // TypeScript 类型检查
+    "npx @biomejs/biome check --write"
+  ],
+  "**/*.{ts,tsx}": [
+    "tsc --noEmit"
   ],
   "**/*.{md,css,less,json}": [
     "npx @biomejs/biome check --write"
