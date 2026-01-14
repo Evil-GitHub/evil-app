@@ -31,6 +31,11 @@
     "test:update": "npm run jest -- -u",
     "tsc": "tsc --noEmit"
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,md,css,less,json}": [
+      "npx @biomejs/biome check --write"
+    ]
+  },
   "browserslist": [
     "defaults"
   ],
@@ -42,12 +47,12 @@
     "antd-style": "^3.7.0",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
-    "react": "^19.1.0",
+    "react": "^19.2.3",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^3.3.0",
-    "@biomejs/biome": "^2.0.6",
+    "@biomejs/biome": "^2.3.11",
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@testing-library/dom": "^10.4.0",
@@ -63,10 +68,10 @@
     "cross-env": "^7.0.3",
     "express": "^4.21.1",
     "gh-pages": "^6.1.1",
-    "husky": "^8.0.3",
+    "husky": "^9.1.7",
     "jest": "^30.0.4",
     "jest-environment-jsdom": "^29.7.0",
-    "lint-staged": "^15.2.2",
+    "lint-staged": "^16.2.7",
     "mockjs": "^1.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3",

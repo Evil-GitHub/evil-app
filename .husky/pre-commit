@@ -1,1 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname "$0")/_/husky.sh"
+
+# 快速格式检查 + lint-staged
+echo "Running lint-staged..."
 npx lint-staged

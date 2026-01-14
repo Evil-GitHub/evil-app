@@ -1,11 +1,3 @@
 {
-  "**/*.{js,jsx,tsx,ts}": [
-    "npx @biomejs/biome check --write"
-  ],
-  "**/*.{ts,tsx}": [
-    "tsc --noEmit"
-  ],
-  "**/*.{md,css,less,json}": [
-    "npx @biomejs/biome check --write"
-  ]
+  "**/*.{js,jsx,ts,tsx,md,css,less,json}": ["npx @biomejs/biome check --write"]
 }

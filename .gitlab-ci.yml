@@ -1,0 +1,9 @@
+image: node:${NODE_VERSION}
+stages:
+  - npm-install
+  - trigger
+variables:
+  NODE_VERSION: "20"
+  VERSION: "$CI_COMMIT_REF_NAME-$CI_COMMIT_SHA"
+  FRONTEND_BRANCH_NAME: $CI_COMMIT_REF_NAME
+  APP_MODE: standalone
