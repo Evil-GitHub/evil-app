@@ -1,6 +1,6 @@
 ## 环境准备
 
-- **Node.js 版本要求 >= 20**  
+- **Node.js 版本要求 >= 20**
   推荐使用 [nvm](https://github.com/nvm-sh/nvm) 或类似工具管理 Node 版本。
 
 - 安装依赖：
@@ -15,7 +15,7 @@ npm install
 yarn
 ```
 
-> **注意：** 安装依赖过程中会自动执行 `prepare` 脚本，完成 Husky Git 钩子的安装。  
+> **注意：** 安装依赖过程中会自动执行 `prepare` 脚本，完成 Husky Git 钩子的安装。
 > 请务必执行依赖安装，否则提交时的 Git 钩子（如 commitlint 和 lint-staged）不会生效。
 
 ---
@@ -27,31 +27,31 @@ yarn
 ### 启动项目
 
 ```bash
-npm start
+yarn start
 ```
 
 ### 构建项目
 
 ```bash
-npm run build
+yarn build
 ```
 
 ### 代码格式检查
 
 ```bash
-npm run lint
+yarn lint
 ```
 
 自动修复部分格式问题：
 
 ```bash
-npm run lint:fix
+yarn lint:fix
 ```
 
 ### 运行测试
 
 ```bash
-npm test
+yarn test
 ```
 
 ---
@@ -67,15 +67,37 @@ npm test
 **注意：**
 
 - 克隆仓库后务必执行依赖安装，确保钩子安装完成。
-- 本地 Node 版本需 >=20。
+- 本地 Node 版本需 >= 20。
 - 手动运行类型检查：
 
 ```bash
-npm run tsc
+yarn tsc
 ```
 
 ---
 
-## 其他说明
+## 常见问题及解决方案
 
-如有问题请联系项目维护人员。
+- **Git 钩子未生效**
+  请确保 `.husky` 目录及钩子文件有执行权限，必要时执行：
+
+```bash
+chmod +x .husky/*
+```
+
+- **提交消息格式不正确**
+  请遵循团队约定的提交规范格式，例如：
+
+```
+feat: 新增功能描述
+fix: 修复问题描述
+```
+
+- **推送被阻止类型检查失败**
+  请修复类型错误后再提交。
+
+---
+
+## 联系方式
+
+如有任何疑问或建议，请联系项目维护人员。
