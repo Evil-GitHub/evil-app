@@ -16,3 +16,14 @@ declare module 'mockjs';
 declare module 'react-fittext';
 
 declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
+
+declare namespace API {
+  type RuleListItem = any;
+  type PageParams = any;
+  type CurrentUser = any;
+}
+
+interface Window {
+  COMMIT_HASH?: string;
+  APP_MODE?: string;
+}

@@ -2,10 +2,10 @@ import { Button, Result } from 'antd';
 import React from 'react';
 import { goHome } from '@/utils/index';
 
-const NoFoundPage: React.FC = () => (
+const UnAccessible: React.FC = () => (
   <Result
-    icon={<img src="/images/404.webp" alt="404" />}
-    subTitle="抱歉，您访问的页面不存在。"
+    icon={<img src="/images/403.webp" alt="403" />}
+    subTitle="抱歉，你无权访问该页面"
     extra={
       <Button type="primary" onClick={goHome}>
         返回首页
@@ -14,4 +14,4 @@ const NoFoundPage: React.FC = () => (
   />
 );
 
-export default NoFoundPage;
+export default UnAccessible;

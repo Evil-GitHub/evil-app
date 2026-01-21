@@ -36,3 +36,6 @@ screenshot
 
 # lock files (npm only)
 package-lock.json
+
+# Environment variables
+.env.local

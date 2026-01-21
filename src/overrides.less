@@ -1,0 +1,37 @@
+.ant-layout {
+  min-height: 100vh;
+}
+.ant-pro-sider.ant-layout-sider.ant-pro-sider-fixed {
+  left: unset;
+}
+
+@media (max-width: 768px) {
+  .ant-table {
+    width: 100%;
+    overflow-x: auto;
+    &-thead > tr,
+    &-tbody > tr {
+      > th,
+      > td {
+        white-space: pre;
+        > span {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+// 表格
+.ant-table-cell {
+  .ant-btn {
+    padding: 0;
+  }
+}
+
+// modal
+.ant-modal {
+  .ant-modal-header {
+    margin-bottom: 16px;
+  }
+}

@@ -3,8 +3,8 @@
  * 解决首次加载时白屏的问题
  */
 (function () {
-  const _root = document.querySelector('#root');
-  if (_root && _root.innerHTML === '') {
+  const _root = document.querySelector("#root");
+  if (_root && _root.innerHTML === "") {
     _root.innerHTML = `
       <style>
         html,
@@ -80,7 +80,7 @@
           display: block;
           width: 9px;
           height: 9px;
-          background-color: #1890ff;
+          background-color: #13c2c2;
           border-radius: 100%;
           -webkit-transform: scale(0.75);
           -ms-transform: scale(0.75);

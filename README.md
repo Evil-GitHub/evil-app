@@ -24,6 +24,14 @@ yarn
 
 以下脚本定义在 `package.json`，可根据需要修改或新增。
 
+---
+
+## 环境变量与地址说明
+
+完整的环境变量说明（包括 API 地址决策逻辑、APP_MODE 行为及常见启动脚本组合），已拆分到独立文档：
+
+- [ENVIRONMENT.md](./ENVIRONMENT.md)
+
 ### 启动项目
 
 ```bash

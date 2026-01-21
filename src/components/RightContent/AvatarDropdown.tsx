@@ -4,13 +4,16 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { history, useModel } from '@umijs/max';
-import type { MenuProps } from 'antd';
 import { Spin } from 'antd';
 import { createStyles } from 'antd-style';
-import React from 'react';
+import defaultSettings from 'config/defaultSettings';
+import { stringify } from 'querystring';
+import type { MenuInfo } from 'rc-menu/lib/interface';
+import React, { useCallback } from 'react';
 import { flushSync } from 'react-dom';
-import { outLogin } from '@/services/ant-design-pro/api';
 import HeaderDropdown from '../HeaderDropdown';
+
+const loginPath = '/user/login';
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
@@ -19,6 +22,7 @@ export type GlobalHeaderRightProps = {
 
 export const AvatarName = () => {
   const { initialState } = useModel('@@initialState');
+
   const { currentUser } = initialState || {};
   return <span className="anticon">{currentUser?.name}</span>;
 };
@@ -49,19 +53,17 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({
    * 退出登录，并且将当前的 url 保存
    */
   const loginOut = async () => {
-    await outLogin();
+    localStorage.removeItem(defaultSettings.TOKEN_KEY);
+
     const { search, pathname } = window.location;
     const urlParams = new URL(window.location.href).searchParams;
-    const searchParams = new URLSearchParams({
-      redirect: pathname + search,
-    });
-    /** 此方法会跳转到 redirect 参数所在的位置 */
     const redirect = urlParams.get('redirect');
-    // Note: There may be security issues, please note
-    if (window.location.pathname !== '/user/login' && !redirect) {
+    if (window.location.pathname !== loginPath && !redirect) {
       history.replace({
-        pathname: '/user/login',
-        search: searchParams.toString(),
+        pathname: loginPath,
+        search: stringify({
+          redirect: pathname + search,
+        }),
       });
     }
   };
@@ -69,17 +71,19 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({
 
   const { initialState, setInitialState } = useModel('@@initialState');
 
-  const onMenuClick: MenuProps['onClick'] = (event) => {
-    const { key } = event;
-    if (key === 'logout') {
-      flushSync(() => {
-        setInitialState((s) => ({ ...s, currentUser: undefined }));
-      });
-      loginOut();
-      return;
-    }
-    history.push(`/account/${key}`);
-  };
+  const onMenuClick = useCallback(
+    (event: MenuInfo) => {
+      const { key } = event;
+      if (key === 'logout') {
+        flushSync(() => {
+          setInitialState((s) => ({ ...s, currentUser: undefined }));
+        });
+        loginOut();
+        return;
+      }
+    },
+    [setInitialState],
+  );
 
   const loading = (
     <span className={styles.action}>
