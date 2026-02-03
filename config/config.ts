@@ -1,6 +1,11 @@
 import { join } from 'node:path';
 import { defineConfig } from '@umijs/max';
 import defaultSettings, { isMicroservice } from './defaultSettings';
+import {
+  FINAL_APP_MODE,
+  FINAL_OPENAPI_ADDRESS,
+  FINAL_REQUEST_ADDRESS,
+} from './env';
 import proxy from './proxy';
 
 import routes from './routes';
@@ -9,43 +14,15 @@ const PUBLIC_PATH: string = '/';
 
 const {
   REACT_APP_ENV = 'dev',
-  APP_MODE = 'standalone',
   FRONTEND_BRANCH_NAME,
   VERSION,
   MAIN_APP_HOME_PATH = '/',
-  OPENAPI_ADDRESS,
-  REQUEST_ADDRESS,
-  MICRO_OPENAPI_ADDRESS,
-  MICRO_REQUEST_ADDRESS,
-  STANDALONE_OPENAPI_ADDRESS,
-  STANDALONE_REQUEST_ADDRESS,
 } = process.env;
-
-const isDev = REACT_APP_ENV === 'dev';
-
-// microservice 微服务版本 、standalone 单机版
-const FINAL_APP_MODE =
-  APP_MODE === 'microservice' ? 'microservice' : 'standalone';
-
-const pickByMode = (standalone?: string, micro?: string) => {
-  return FINAL_APP_MODE === 'microservice' ? micro : standalone;
-};
-
-const FINAL_OPENAPI_ADDRESS =
-  OPENAPI_ADDRESS ||
-  pickByMode(STANDALONE_OPENAPI_ADDRESS, MICRO_OPENAPI_ADDRESS);
-
-const FINAL_REQUEST_ADDRESS =
-  REQUEST_ADDRESS ||
-  pickByMode(STANDALONE_REQUEST_ADDRESS, MICRO_REQUEST_ADDRESS);
-
-export { FINAL_REQUEST_ADDRESS };
 
 export default defineConfig({
   define: {
     'process.env.FRONTEND_BRANCH_NAME': FRONTEND_BRANCH_NAME,
     'process.env.COMMIT_HASH': VERSION,
-    'process.env.REACT_APP_ENV': REACT_APP_ENV,
     'process.env.APP_MODE': FINAL_APP_MODE,
     'process.env.MAIN_APP_HOME_PATH': MAIN_APP_HOME_PATH,
     'process.env.OPENAPI_ADDRESS': FINAL_OPENAPI_ADDRESS,

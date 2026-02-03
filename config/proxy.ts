@@ -1,4 +1,4 @@
-import { FINAL_REQUEST_ADDRESS } from './config';
+import { FINAL_REQUEST_ADDRESS } from './env';
 
 export default {
   dev: {
