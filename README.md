@@ -6,12 +6,6 @@
 - 安装依赖：
 
 ```bash
-npm install
-```
-
-或
-
-```bash
 yarn
 ```
 
