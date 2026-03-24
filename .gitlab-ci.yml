@@ -1,9 +1,41 @@
 image: node:${NODE_VERSION}
+
 stages:
-  - npm-install
+  - validate
+  - build
   - trigger
+
 variables:
   NODE_VERSION: "20"
   VERSION: "$CI_COMMIT_REF_NAME-$CI_COMMIT_SHA"
   FRONTEND_BRANCH_NAME: $CI_COMMIT_REF_NAME
   APP_MODE: standalone
+  YARN_CACHE_FOLDER: .yarn-cache
+
+cache:
+  key:
+    files:
+      - yarn.lock
+  paths:
+    - .yarn-cache/
+    - node_modules/
+
+default:
+  before_script:
+    - corepack enable
+    - yarn install --frozen-lockfile
+
+lint:
+  stage: validate
+  script:
+    - yarn lint
+
+test:
+  stage: validate
+  script:
+    - yarn test --passWithNoTests
+
+build:
+  stage: build
+  script:
+    - yarn build

@@ -15,8 +15,16 @@ npm install
 yarn
 ```
 
-> **注意：** 安装依赖过程中会自动执行 `prepare` 脚本，完成 Husky Git 钩子的安装。
-> 请务必执行依赖安装，否则提交时的 Git 钩子（如 commitlint 和 lint-staged）不会生效。
+> **注意：** 安装依赖过程中会自动执行 `prepare` 脚本，自动初始化 Husky Git 钩子。
+> 请务必先执行依赖安装，否则提交前的校验钩子不会生效。
+
+- 初始化环境变量：
+
+```bash
+cp .env.example .env.local
+```
+
+再按实际环境修改接口地址等配置。
 
 ---
 
@@ -50,10 +58,10 @@ yarn build
 yarn lint
 ```
 
-自动修复部分格式问题：
+自动修复部分格式问题可直接在提交时交给 `lint-staged` 处理；如需手动执行，可运行：
 
 ```bash
-yarn lint:fix
+npx @biomejs/biome check --write .
 ```
 
 ### 运行测试
@@ -68,14 +76,14 @@ yarn test
 
 项目采用 Husky 管理 Git 钩子，确保代码质量：
 
-- **pre-commit**：运行 `lint-staged`，对暂存文件进行格式校验及自动修复。
+- **pre-commit**：先运行 `lint-staged`，对暂存文件进行格式校验及自动修复；随后执行完整 TypeScript 类型检查（`tsc --noEmit`），在提交前拦截明显问题。
 - **commit-msg**：运行 `commitlint`，校验提交信息格式。
-- **pre-push**：运行完整 TypeScript 类型检查（`tsc --noEmit`），防止类型错误代码推送。
 
 **注意：**
 
-- 克隆仓库后务必执行依赖安装，确保钩子安装完成。
+- 克隆仓库后务必执行依赖安装，确保 Husky 初始化完成。
 - 本地 Node 版本需 >= 20。
+- 如果是在非 Git 目录中安装依赖，Husky 会自动跳过初始化；拉到真实仓库后重新安装依赖即可。
 - 手动运行类型检查：
 
 ```bash
@@ -101,8 +109,8 @@ feat: 新增功能描述
 fix: 修复问题描述
 ```
 
-- **推送被阻止类型检查失败**
-  请修复类型错误后再提交。
+- **提交时被类型检查拦截**
+  请先修复类型错误后再重新提交。
 
 ---
 

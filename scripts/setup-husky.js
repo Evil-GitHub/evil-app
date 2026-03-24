@@ -6,35 +6,42 @@ function run(cmd) {
   execSync(cmd, { stdio: 'inherit' });
 }
 
-// 安装 husky 钩子（幂等）
-run('npx husky install');
-
-const huskyDir = path.resolve(process.cwd(), '.husky');
-
-function addHook(name, cmd) {
-  const hookFile = path.join(huskyDir, name);
-  if (!fs.existsSync(hookFile)) {
-    run(`npx husky add ${hookFile} "${cmd}"`);
-    console.log(`✅ 创建 husky 钩子：${name}`);
-  } else {
-    console.log(`ℹ️ 钩子已存在，跳过：${name}`);
+function isGitRepository() {
+  try {
+    execSync('git rev-parse --git-dir', { stdio: 'ignore' });
+    return true;
+  } catch {
+    return false;
   }
 }
 
-// 创建常用钩子
-addHook('pre-commit', 'npx lint-staged');
-addHook('commit-msg', 'npx --no -- commitlint --edit $1');
-addHook('pre-push', 'npm run tsc');
+if (!isGitRepository()) {
+  console.log('当前目录不是 Git 仓库，跳过 Husky 初始化。');
+  process.exit(0);
+}
 
-// 设置钩子执行权限
-fs.readdirSync(huskyDir).forEach((file) => {
+const huskyDir = path.resolve(process.cwd(), '.husky');
+
+if (!fs.existsSync(huskyDir)) {
+  console.warn('未找到 .husky 目录，跳过 Husky 初始化。');
+  process.exit(0);
+}
+
+run('npx husky');
+
+for (const file of fs.readdirSync(huskyDir)) {
   const filePath = path.join(huskyDir, file);
-  try {
-    fs.chmodSync(filePath, '755');
-    console.log(`✅ 设置执行权限：${file}`);
-  } catch (e) {
-    console.warn(`⚠️ 设置权限失败：${file}`, e);
-  }
-});
 
-console.log('🎉 husky 钩子安装和配置完成！');
+  if (!fs.statSync(filePath).isFile()) {
+    continue;
+  }
+
+  try {
+    fs.chmodSync(filePath, 0o755);
+    console.log(`设置执行权限：${file}`);
+  } catch (error) {
+    console.warn(`设置权限失败：${file}`, error);
+  }
+}
+
+console.log('Husky 初始化完成！');

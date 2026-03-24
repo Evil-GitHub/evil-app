@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 . "$(dirname "$0")/_/husky.sh"
 
-# 快速格式检查 + lint-staged
+# 提交前先校验暂存文件，再跑完整类型检查
 echo "Running lint-staged..."
 npx lint-staged
+
+echo "Running TypeScript check..."
+npx tsc --noEmit
