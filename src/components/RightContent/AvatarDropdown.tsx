@@ -4,13 +4,14 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { history, useModel } from '@umijs/max';
-import { Spin } from 'antd';
+import { Space, Spin } from 'antd';
 import { createStyles } from 'antd-style';
 import defaultSettings from 'config/defaultSettings';
 import { stringify } from 'querystring';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import React, { useCallback } from 'react';
 import { flushSync } from 'react-dom';
+import Avatar from '../Avatar';
 import HeaderDropdown from '../HeaderDropdown';
 
 const loginPath = '/user/login';
@@ -24,7 +25,12 @@ export const AvatarName = () => {
   const { initialState } = useModel('@@initialState');
 
   const { currentUser } = initialState || {};
-  return <span className="anticon">{currentUser?.name}</span>;
+  return (
+    <Space>
+      <Avatar name={currentUser?.name} />
+      <span className="anticon">{currentUser?.name}</span>
+    </Space>
+  );
 };
 
 const useStyles = createStyles(({ token }) => {

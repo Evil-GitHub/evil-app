@@ -84,7 +84,7 @@ export const layout: RunTimeLayoutConfig = ({
     //   <SelectLang key="SelectLang" />,
     // ],
     avatarProps: {
-      src: '/images/user.svg',
+      // src: '/images/user.svg',
       title: <AvatarName />,
       render: (_, avatarChildren) => {
         return <AvatarDropdown>{avatarChildren}</AvatarDropdown>;

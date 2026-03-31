@@ -5,8 +5,9 @@
 /**
  * 布局组件
  */
+import Avatar from './Avatar';
 import Footer from './Footer';
 import { Question, SelectLang } from './RightContent';
 import { AvatarDropdown, AvatarName } from './RightContent/AvatarDropdown';
 
-export { AvatarDropdown, AvatarName, Footer, Question, SelectLang };
+export { Avatar, AvatarDropdown, AvatarName, Footer, Question, SelectLang };
