@@ -4,7 +4,7 @@ import { Helmet, useIntl, useModel } from '@umijs/max';
 import { App } from 'antd';
 import classNames from 'classnames/bind';
 import Settings from 'config/defaultSettings';
-import React, { useState } from 'react';
+import React from 'react';
 import { flushSync } from 'react-dom';
 import { Footer } from '@/components';
 import styles from './index.less';
@@ -57,17 +57,7 @@ export async function login(params: {
 }
 
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<{
-    status: 'ok' | 'error';
-    type: string;
-    currentAuthority: string;
-    message?: string;
-  }>({
-    status: 'ok',
-    type: '',
-    currentAuthority: '',
-  });
-  const [type, setType] = useState<string>('account');
+  const type = 'account';
   const { initialState, setInitialState } = useModel('@@initialState');
   const { message } = App.useApp();
   const intl = useIntl();
@@ -99,11 +89,8 @@ const Login: React.FC = () => {
         window.location.href = urlParams.get('redirect') || '/';
         return;
       }
-      console.log(msg);
-      // 如果失败去设置用户错误信息
-      setUserLoginState(msg);
-    } catch (error) {
-      console.log(error);
+      message.error(msg.message || '用户名或密码错误');
+    } catch (_error) {
       message.error('登录失败，请重试！');
     }
   };

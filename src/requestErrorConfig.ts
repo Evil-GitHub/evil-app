@@ -1,6 +1,8 @@
 ﻿import type { RequestOptions } from '@@/plugin-request/request';
 import type { RequestConfig } from '@umijs/max';
 import { message, notification } from 'antd';
+import defaultSettings from 'config/defaultSettings';
+import dayjs from 'dayjs';
 
 // 错误处理方案： 错误类型
 enum ErrorShowType {
@@ -88,9 +90,22 @@ export const errorConfig: RequestConfig = {
   // 请求拦截器
   requestInterceptors: [
     (config: RequestOptions) => {
-      // 拦截请求配置，进行个性化处理。
-      const url = config?.url?.concat('?token=123');
-      return { ...config, url };
+      const { headers, url } = config;
+      const isLogin = url?.includes('/login');
+      const token =
+        globalThis.localStorage?.getItem(defaultSettings.TOKEN_KEY) || '';
+      const requestId = dayjs().format('YYYYMMDDHHmmssSSS');
+
+      return isLogin
+        ? config
+        : ({
+            ...config,
+            headers: {
+              ...headers,
+              ...(token ? { Authorization: token } : {}),
+              'request-id': requestId,
+            },
+          } as RequestOptions);
     },
   ],
 

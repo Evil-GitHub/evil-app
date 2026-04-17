@@ -7,7 +7,6 @@ import { history, useModel } from '@umijs/max';
 import { Space, Spin } from 'antd';
 import { createStyles } from 'antd-style';
 import defaultSettings from 'config/defaultSettings';
-import { stringify } from 'querystring';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import React, { useCallback } from 'react';
 import { flushSync } from 'react-dom';
@@ -67,9 +66,9 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({
     if (window.location.pathname !== loginPath && !redirect) {
       history.replace({
         pathname: loginPath,
-        search: stringify({
+        search: new URLSearchParams({
           redirect: pathname + search,
-        }),
+        }).toString(),
       });
     }
   };

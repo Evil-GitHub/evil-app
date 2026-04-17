@@ -78,7 +78,7 @@ export const goHome = () => {
  * @returns
  */
 export const getGradientColorFromCharCode = (charCode: number) => {
-  if (isNaN(charCode)) return {};
+  if (Number.isNaN(charCode)) return {};
   const hue = charCode % 360;
   const colorArray = [
     ['#21D4FD', '#B721FF'],

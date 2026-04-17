@@ -1,9 +1,8 @@
-#!/usr/bin/env sh
-. "$(dirname "$0")/_/husky.sh"
-
-# 提交前先校验暂存文件，再跑完整类型检查
-echo "Running lint-staged..."
+echo "Running staged file checks..."
 npx lint-staged
 
-echo "Running TypeScript check..."
-npx tsc --noEmit
+echo "Running full lint..."
+npm run lint
+
+echo "Running tests..."
+npm test -- --runInBand
